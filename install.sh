@@ -19,6 +19,7 @@ DO_PRINT_DOWNLOADS=0
 FORCE=0
 YES=0
 INSTALLER_URL="${ANTIGRAVITY_LINUX_INSTALLER_URL:-}"
+cleanup_tmpdir=""
 
 log() { printf '%s\n' "$*"; }
 warn() { printf 'WARN: %s\n' "$*" >&2; }
@@ -576,7 +577,9 @@ main() {
   mkdir -p "$tmp_parent"
   local tmpdir
   tmpdir=$(mktemp -d "$tmp_parent/$PROJECT_NAME.XXXXXX")
-  trap 'rm -rf "$tmpdir"' EXIT
+  # Preserve the path for cleanup after main() returns.
+  cleanup_tmpdir="$tmpdir"
+  trap 'rm -rf -- "$cleanup_tmpdir"' EXIT
   local html_file
   html_file=$(resolve_download_page "$tmpdir")
   [ "$INSTALL_DESKTOP" -eq 1 ] && install_desktop_app "$tmpdir" "$html_file"
