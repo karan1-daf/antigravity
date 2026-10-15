@@ -336,7 +336,8 @@ install_ide_app() {
   local tmpdir="$1"
   local html_file="$2"
   local version url
-  read -r version url < <(resolve_ide_download "$html_file")  local root="/opt/antigravity-ide"
+  read -r version url < <(resolve_ide_download "$html_file")
+  local root="/opt/antigravity-ide"
   local install_dir="Antigravity-IDE"
   local version_file="$root/.antigravity-linux-version"
   if [ "$FORCE" -eq 0 ] && [ -x "$root/$install_dir/antigravity-ide" ] && [ "$(installed_version "$version_file")" = "$version" ]; then
