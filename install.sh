@@ -280,7 +280,8 @@ install_desktop_app() {
   local tmpdir="$1"
   local html_file="$2"
   local version url
-  read -r version url < <(resolve_desktop_download "$html_file")  local root="/opt/antigravity"
+  read -r version url < <(resolve_desktop_download "$html_file")
+  local root="/opt/antigravity"
   local target="$root/$DESKTOP_TOP/antigravity"
   local version_file="$root/.antigravity-linux-version"
   if [ "$FORCE" -eq 0 ] && [ -x "$target" ] && [ "$(installed_version "$version_file")" = "$version" ]; then
